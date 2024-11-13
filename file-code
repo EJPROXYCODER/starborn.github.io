@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EJ And Avi Studios</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            background: linear-gradient(to bottom, blue, rgb(147, 93, 200)); /* light purple */
+        }
+        .tabs {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2;
+            display: flex;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background-color: #ddd;
+        }
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        iframe {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 40px);
+            border: none;
+            z-index: 1;
+            display: none;
+        }
+        iframe.active {
+            display: block;
+        }
+        .button-container {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: auto;
+            display: none;
+            flex-direction: row;
+            align-items: center;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        .button {
+            margin: 10px;
+            padding: 15px 30px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .button:hover {
+            background-color: #333;
+        }
+        .credits, .settings {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 40px);
+            display: none;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<div class="tabs" id="tabs">
+    <div class="tab active" onclick="showTab('iframe1')">Browser</div>
+    <div class="tab" onclick="showTab('buttons')">Games</div>
+    <div class="tab" onclick="showTab('credits')">Credits/Instructions</div>
+    <div class="tab" onclick="showTab('settings')">Settings</div>
+</div>
+
+<iframe id="iframe1" src="https://yukashine.pagostepeapulco.gob.mx" class="active"></iframe>
+<iframe id="iframe2" src="https://retrobowl-free.github.io/" class="iframe"></iframe>
+<iframe id="iframe3" src="https://www.yoosfuhl.com/game/bouncybasketball/index.html" class="iframe"></iframe>
+<iframe id="iframe4" src="https://yukashine.pagostepeapulco.gob.mx/b489e11a095e45b3b9d0b69c43d480dd/_rhsPN6KX://12G.4lFZ4MGMZ6Ft0.r2h/hUT9/vMR0Ddpf3hYsQBL/YYEcIzz6qa~YZAff1lCWl4WWje03/" class="iframe"></iframe>
+<iframe id="iframe5" src="https://yukashine.pagostepeapulco.gob.mx/b489e11afcfa4befa8237ad7ca36da36/_rhsepzP7://HpyHwrF.~zO/" class="iframe"></iframe>
+<iframe id="iframe6" src="https://yukashine.pagostepeapulco.gob.mx/b489e11a5a5742b2bb433944c1775a2a/_rhsARlLI://jX6EXlrI7W7M5I52PEWW.kYMF-/" class="iframe"></iframe>
+
+<div id="buttons" class="button-container">
+    <button class="button" onclick="showIframe('iframe2')">Retro Bowl</button>
+    <button class="button" onclick="showIframe('iframe3')">Bouncy Basketball</button>
+    <button class="button" onclick="showIframe('iframe4')">Pokémon FireRed and LeafGreen</button>
+    <button class="button" onclick="showIframe('iframe5')">Slope</button>
+    <button class="button" onclick="showIframe('iframe6')">Tiny Fishing</button>
+</div>
+
+<div id="credits" class="credits">
+    <h1><strong>Credits and Instructions</strong></h1>
+    <h2>Click <strong>O</strong> to hide the tabs.</h2>
+    <ul><h1><strong>Developers/Workers</strong></h1>
+        <li><h2><strong>Owner/Dev: Ethan Jelinek (Email:ejelinek001@student.hampton.k12.va.us)</strong></h2></li>
+        <li><h2><strong>Dev: Antonio Sargent (Email:asargent007@student.hampton.k12.va.us)</strong></h2></li>
+        <li><h2><strong>Mental Support💀: Samuel Grondin (Email:sgrondin001@student.hampton.k12.va.us)</strong></h2></li>
+    </ul>
+</div>
+
+<div id="settings" class="settings">
+    <h1><strong>Settings</strong></h1>
+    <p>Site Settings Below:</p>
+    <input type="file" id="musicFile" accept="audio/*" />
+    <audio id="audioPlayer" controls>
+        Your browser does not support the audio element.
+    </audio>
+    
+    <h2>Select Theme:</h2>
+    <select id="themeSelector" onchange="changeTheme()">
+        <option value="default">Default</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="ocean">Ocean</option>
+        <option value="sunset">Sunset</option>
+        <option value="forest">Forest</option>
+        <option value="vintage">Vintage</option>
+        <option value="galaxy">Galaxy</option>
+        <option value="rainbow">Rainbow</option>
+        <option value="metallic">Metallic</option>
+        <option value="cyberpunk">Cyberpunk</option>
+        <option value="retro">Retro</option>
+        <option value="midnight">Midnight</option>
+        <option value="autumn">Autumn</option>
+    </select>
+</div>
+
+<canvas id="canvas"></canvas>
+
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const balls = [];
+    const numBalls = 100;
+
+    function getRandomColor() {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        const brightness = (r + g + b) / 3;
+        if (brightness > 200) {
+            return getRandomColor();
+        }
+        return `rgb(${r},${g},${b})`;
+    }
+
+    for (let i = 0; i < numBalls; i++) {
+        balls.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: 20,
+            dx: (Math.random() * 4) + 1,
+            dy: (Math.random() * 4) + 1,
+            color: getRandomColor(),
+            text: i < numBalls / 2 ? 'EJ' : 'Avi'
+        });
+    }
+
+    function drawBalls() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        balls.forEach(ball => {
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = ball.color;
+            ctx.fill();
+            ctx.closePath();
+            ctx.fillStyle = 'white';
+            ctx.font = '20px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(ball.text, ball.x, ball.y);
+        });
+    }
+
+    function update() {
+        balls.forEach(ball => {
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+            if (ball.x + ball.radius > canvas.width) {
+                ball.x = canvas.width - ball.radius;
+                ball.dx = -ball.dx;
+                ball.color = getRandomColor();
+            }
+            if (ball.x - ball.radius < 0) {
+                ball.x = ball.radius;
+                ball.dx = -ball.dx;
+                ball.color = getRandomColor();
+            }
+            if (ball.y + ball.radius > canvas.height) {
+                ball.y = canvas.height - ball.radius;
+                ball.dy = -ball.dy;
+                ball.color = getRandomColor();
+            }
+            if (ball.y - ball.radius < 0) {
+                ball.y = ball.radius;
+                ball.dy = -ball.dy;
+                ball.color = getRandomColor();
+            }
+        });
+    }
+
+    function animate() {
+        drawBalls();
+        update();
+        requestAnimationFrame(animate);
+    }
+
+    function toggleTabs() {
+        const tabs = document.getElementById('tabs');
+        const iframe = document.querySelector('iframe.active');
+        const isTabsVisible = tabs.style.display !== 'none';
+
+        if (isTabsVisible) {
+            tabs.style.display = 'none';
+            iframe.style.height = '100%';
+            iframe.style.top = '0'; // Make iframe take the full height
+        } else {
+            tabs.style.display = 'flex';
+            iframe.style.height = 'calc(100% - 40px)';
+            iframe.style.top = '40px'; // Move iframe back below the tabs
+        }
+    }
+
+    function showTab(tabId) {
+        const iframes = document.querySelectorAll('iframe');
+        iframes.forEach(iframe => {
+            iframe.classList.remove('active');
+        });
+
+        const buttonContainer = document.getElementById('buttons');
+        buttonContainer.style.display = 'none';
+        const credits = document.getElementById('credits');
+        credits.style.display = 'none';
+        const settings = document.getElementById('settings');
+        settings.style.display = 'none';
+
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.classList.remove('active');
+        });
+
+        if (tabId === 'iframe1') {
+            document.getElementById(tabId).classList.add('active');
+        } else if (tabId === 'credits') {
+            credits.style.display = 'block';
+        } else if (tabId === 'settings') {
+            settings.style.display = 'block';
+        } else {
+            buttonContainer.style.display = 'flex';
+        }
+
+        const activeTab = document.querySelector(`.tab[onclick*="${tabId}"]`);
+        if (activeTab) {
+            activeTab.classList.add('active');
+        }
+    }
+
+    function showIframe(iframeId) {
+        const iframes = document.querySelectorAll('iframe');
+        iframes.forEach(iframe => {
+            iframe.classList.remove('active');
+        });
+
+        document.getElementById(iframeId).classList.add('active');
+        document.getElementById('buttons').style.display = 'none';
+        document.getElementById('credits').style.display = 'none';
+        document.getElementById('settings').style.display = 'none';
+    }
+
+    document.getElementById('musicFile').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const audioPlayer = document.getElementById('audioPlayer');
+
+        if (file) {
+            const fileURL = URL.createObjectURL(file);
+            audioPlayer.src = fileURL;
+            audioPlayer.play(); // Automatically play the selected music
+        }
+    });
+
+    function changeTheme() {
+        const theme = document.getElementById('themeSelector').value;
+        const tabs = document.getElementById('tabs');
+        const activeTabs = document.querySelectorAll('.tab');
+
+        if (theme === 'default') {
+            tabs.style.background = 'rgba(255, 255, 255, 0.8)';
+            activeTabs.forEach(tab => {
+                tab.style.backgroundColor = '#f1f1f1';
+                tab.style.color = 'black';
+            });
+            document.body.style.background = 'linear-gradient(to bottom, blue, rgb(147, 93, 200))'; 
+        } else if (theme === 'light') {
+            tabs.style.background = 'rgba(255, 255, 255, 1)';
+            activeTabs.forEach(tab => {
+                tab.style.backgroundColor = '#e0e0e0';
+                tab.style.color = 'black';
+            });
+            document.body.style.background = 'linear-gradient(to bottom, #f0f0f0, #d0d0d0)';
+        } else if (theme === 'dark') {
+            tabs.style.background = 'rgba(50, 50, 50, 0.8)';
+            activeTabs.forEach(tab => {
+                tab.style.backgroundColor = '#333';
+                tab.style.color = 'white';
+            });
+            document.body.style.background = 'linear-gradient(to bottom, #000, #444)';
+        } else if (theme === 'ocean') {
+            tabs.style.background = 'rgba(255, 255, 255, 0.8)';
+            activeTabs.forEach(tab => {
+                tab.style.backgroundColor = '#b0e0e6';
+                tab.style.color = 'black';
+            });
+            document.body.style.background = 'linear-gradient(to bottom, #00bfff, #1e90ff)';
+        } else if (theme === 'sunset') {
+            tabs.style.background = 'rgba(255, 255, 255, 0.8)';
+            activeTabs.forEach(tab => {
+                tab.style.backgroundColor = '#ffcccb';
+                tab.style.color = 'black';
+            });
+            document.body.style.background = 'linear-gradient(to bottom, #ff4500, #ff6347)';
+        } else if (theme === 'forest') {
+            tabs.style.background = 'rgba(255, 255, 255, 0.8)';
+            activeTabs.forEach(tab => {
+                tab.style.backgroundColor = '#8fbc8f';
+                tab.style.color = 'black';
+            });
+            document.body.style.background = 'linear-gradient(to bottom, #2e8b57, #3cb371)';
+        } else if (theme === 'vintage') {
+            tabs.style.background = 'rgba(255, 255, 255, 0.8)';
+            activeTabs.forEach(tab => {
+                tab.style.backgroundColor = '#f5deb3';
+                tab.style.color = 'black';
+            });
+            document.body.style.background = 'linear-gradient(to bottom, #d2b48c, #cd853f)';
+        } else if (theme === 'galaxy') {
+            tabs.style.background = 'rgba(0, 0, 0, 0.8)';
+            activeTabs.forEach(tab => {
+                tab.style.backgroundColor = '#6a5acd';
+                tab.style.color = 'white';
+            });
+            document.body.style.background = 'linear-gradient(to bottom, #000, #4b0082)';
+        } else if (theme === 'rainbow') {
+            tabs.style.background = 'rgba(255, 255, 255, 0.8)';
+            activeTabs.forEach(tab => {
+                tab.style.backgroundColor = '#ffeb3b';
+                tab.style.color = 'black';
+            });
+            document.body.style.background = 'linear-gradient(to bottom, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)';
+        } else if (theme === 'metallic') {
+            tabs.style.background = 'rgba(255, 255, 255, 0.8)';
+            activeTabs.forEach(tab => {
+                tab.style.backgroundColor = '#c0c0c0';
+                tab.style.color = 'black';
+            });
+            document.body.style.background = 'linear-gradient(to bottom, #808080, #a9a9a9)';
+        } else if (theme === 'cyberpunk') {
+            tabs.style.background = 'rgba(0, 0, 0, 0.7)';
+            activeTabs.forEach(tab => {
+                tab.style.backgroundColor = '#ff00ff';
+                tab.style.color = 'black';
+            });
+            document.body.style.background = 'linear-gradient(to bottom, #00ffff, #ff00ff)';
+        } else if (theme === 'retro') {
+            tabs.style.background = 'rgba(255, 255, 255, 0.8)';
+            activeTabs.forEach(tab => {
+                tab.style.backgroundColor = '#ffdab9';
+                tab.style.color = 'black';
+            });
+            document.body.style.background = 'linear-gradient(to bottom, #f08080, #e6e6fa)';
+        } else if (theme === 'midnight') {
+            tabs.style.background = 'rgba(0, 0, 0, 0.7)';
+            activeTabs.forEach(tab => {
+                tab.style.backgroundColor = '#696969';
+                tab.style.color = 'white';
+            });
+            document.body.style.background = 'linear-gradient(to bottom, #000000, #4b0082)';
+        } else if (theme === 'autumn') {
+            tabs.style.background = 'rgba(255, 255, 255, 0.8)';
+            activeTabs.forEach(tab => {
+                tab.style.backgroundColor = '#ff8c00';
+                tab.style.color = 'black';
+            });
+            document.body.style.background = 'linear-gradient(to bottom, #ff4500, #ff6347)';
+        }
+    }
+
+    window.addEventListener('keydown', (event) => {
+        if (event.key.toLowerCase() === 'o') {
+            toggleTabs();
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    animate();
+</script>
+
+</body>
+</html>
